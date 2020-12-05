@@ -6,9 +6,8 @@ jobs:
     steps:
       - checkout
       - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-      - run: docker run -d --name db aimeos/ci-php:7.4
-      - run: docker build -t db aimeos/ci-php:7.4 ci-php/7.4
-      - run: docker push db aimeos/ci-php:7.4
+      - run: docker build -t aimeos/ci-php:7.4 ci-php/7.4
+      - run: docker push aimeos/ci-php:7.4
 
 workflows:
   version: 2
