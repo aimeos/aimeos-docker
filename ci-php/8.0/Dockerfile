@@ -17,6 +17,7 @@ RUN sudo apt-get update && sudo apt-get install -y \
 		php$PHP_MINOR-mbstring \
 		php$PHP_MINOR-mysql \
 		php$PHP_MINOR-pgsql \
+		php$PHP_MINOR-sqlite \
 		php$PHP_MINOR-xdebug \
 		php$PHP_MINOR-xml \
 		php$PHP_MINOR-zip \
@@ -32,9 +33,9 @@ RUN sudo apt-get update && sudo ACCEPT_EULA=Y apt-get install -y \
 		odbcinst1debian2 \
 		libodbc1
 
-# RUN sudo pecl channel-update pecl.php.net && sudo pecl install pdo_sqlsrv
-# RUN echo -e "; priority=20\nextension=pdo_sqlsrv" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_sqlsrv.ini
-# RUN sudo phpenmod pdo_sqlsrv
+RUN sudo pecl channel-update pecl.php.net && sudo pecl install pdo_sqlsrv
+RUN echo -e "; priority=20\nextension=pdo_sqlsrv" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_sqlsrv.ini
+RUN sudo phpenmod pdo_sqlsrv
 
 # Install the PHP package manager Composer
 RUN sudo php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
