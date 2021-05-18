@@ -45,16 +45,19 @@ RUN sudo chmod o+r /etc/ld.so.conf.d/oracle.conf
 RUN sudo ldconfig
 RUN export ORACLE_HOME=/usr/lib/oracle/21.1/client64
 RUN export PATH=$PATH:$ORACLE_HOME/bin
+RUN rm oracle-*.rpm
 
 # Install DB2 libs
 RUN sudo apt-get install ksh php-pear
 RUN curl --output /tmp/x64_v10.5fp8_linuxx64_dsdriver.tar.gz http://cdn1.netmake.com.br/download/Conexao/DB2/Linux/x64_v10.5fp8_linuxx64_dsdriver.tar.gz
-RUN tar xf /tmp/x64_v10.5fp8_linuxx64_dsdriver.tar.gz -C /tmp
-RUN sudo ksh /tmp/dsdriver/installDSDriver
+RUN sudo mkdir -p /opt/ibm
+RUN sudo tar xf /tmp/x64_v10.5fp8_linuxx64_dsdriver.tar.gz -C /opt/ibm
+RUN sudo ksh /opt/ibm/dsdriver/installDSDriver
+RUN rm /tmp/x64_v10.5fp8_linuxx64_dsdriver.tar.gz
 
 # Install PDO drivers
 RUN sudo pecl channel-update pecl.php.net
-RUN sudo IBM_DB_HOME=/tmp/dsdriver pecl install ibm_db2
+RUN sudo IBM_DB_HOME=/opt/ibm/dsdriver pecl install ibm_db2
 RUN echo -e "; priority=20\nextension=ibm_db2.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/ibm_db2.ini
 RUN sudo phpenmod ibm_db2
 RUN sudo pecl install oci8-2.2.0
@@ -69,5 +72,4 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 	sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
 	php -r "unlink('composer-setup.php');" && \
 	composer --version
-RUN sudo rm -rf /home/circleci/project
 ENV PATH /home/circleci/.config/composer/vendor/bin:/home/circleci/.composer/vendor/bin:$PATH

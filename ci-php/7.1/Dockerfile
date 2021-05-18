@@ -4,9 +4,8 @@ LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
 ENV PHP_MINOR 7.1
 
-RUN sudo add-apt-repository -y ppa:ondrej/php && \
-	sudo apt-get install -y php${PHP_MINOR} php${PHP_MINOR}-dev && \
-	sudo rm -rf /var/lib/apt/lists/*
+RUN sudo add-apt-repository -y ppa:ondrej/php
+RUN sudo apt-get install -y php${PHP_MINOR} php${PHP_MINOR}-dev
 
 # Pre-install a few very popular PHP extensions
 RUN sudo apt-get update && sudo apt-get install -y \
@@ -20,14 +19,11 @@ RUN sudo apt-get update && sudo apt-get install -y \
 		php$PHP_MINOR-pgsql \
 		php$PHP_MINOR-sqlite \
 		php$PHP_MINOR-xml \
-		php$PHP_MINOR-zip \
-	&& \
-	sudo rm -rf /var/lib/apt/lists/*
+		php$PHP_MINOR-zip
 
 # Install the PHP package manager Composer
-RUN sudo php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
 	sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
-	sudo php -r "unlink('composer-setup.php');" && \
+	php -r "unlink('composer-setup.php');" && \
 	composer --version
-RUN sudo rm -rf /home/circleci/project
 ENV PATH /home/circleci/.config/composer/vendor/bin:/home/circleci/.composer/vendor/bin:$PATH
