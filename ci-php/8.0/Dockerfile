@@ -48,7 +48,7 @@ RUN rm oracle-*.rpm
 
 # Install DB2 libs
 RUN sudo apt-get install ksh php-pear
-RUN curl --output /tmp/linuxx64_odbc_cli.tar.gz wget https://public.dhe.ibm.com/ibmdl/export/pub/software/data/db2/drivers/odbc_cli/linuxx64_odbc_cli.tar.gz
+RUN curl --output /tmp/linuxx64_odbc_cli.tar.gz https://public.dhe.ibm.com/ibmdl/export/pub/software/data/db2/drivers/odbc_cli/linuxx64_odbc_cli.tar.gz
 RUN sudo mkdir -p /opt/ibm
 RUN sudo tar xf /tmp/linuxx64_odbc_cli.tar.gz -C /opt/ibm
 RUN sudo ksh /opt/ibm
