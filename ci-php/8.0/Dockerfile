@@ -4,7 +4,7 @@ LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
 ENV PHP_MINOR 8.0
 
-RUN sudo add-apt-repository -y ppa:ondrej/php
+RUN sudo add-apt-repository -s -y ppa:ondrej/php
 RUN sudo apt-get install -y php${PHP_MINOR} php${PHP_MINOR}-dev
 
 # Pre-install a few very popular PHP extensions
@@ -67,6 +67,15 @@ RUN sudo phpenmod sqlsrv
 RUN sudo pecl install pdo_sqlsrv
 RUN echo -e "; priority=20\nextension=pdo_sqlsrv" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_sqlsrv.ini
 RUN sudo phpenmod pdo_sqlsrv
+
+RUN apt-get source php${PHP_MINOR}
+RUN cd `find php${PHP_MINOR}*/ext/pdo_oci -mindepth 0 -maxdepth 0 -type d` && phpize
+RUN cd `find php${PHP_MINOR}*/ext/pdo_oci -mindepth 0 -maxdepth 0 -type d` && ./configure --with-pdo-oci=instantclient,/usr/lib/oracle/21/client64/lib/
+RUN cd `find php${PHP_MINOR}*/ext/pdo_oci -mindepth 0 -maxdepth 0 -type d` && make
+RUN cd `find php${PHP_MINOR}*/ext/pdo_oci -mindepth 0 -maxdepth 0 -type d` && sudo make install
+RUN echo -e "; priority=20\nextension=pdo_oci.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_oci.ini
+RUN sudo phpenmod pdo_oci
+RUN rm -rf php${PHP_MINOR}*
 
 # Install the PHP package manager Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
