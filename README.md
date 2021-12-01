@@ -31,7 +31,7 @@ docker run -it aimeos/ci-php:<version> bash
 * xml
 * zip
 
-The images `aimeos/ci-php:7.4` and `aimeos/ci-php:8.0` contain in addition:
+The images `aimeos/ci-php:7.4`, `aimeos/ci-php:8.0` and `aimeos/ci-php:8.1` contain in addition:
 
 * ibm_db2
 * oci8
