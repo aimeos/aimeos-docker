@@ -9,6 +9,7 @@ The images are used for continuous integration tests and are base on Ubuntu 20.0
 * aimeos/ci-php:7.3
 * aimeos/ci-php:7.4
 * aimeos/ci-php:8.0
+* aimeos/ci-php:8.1
 
 Run the images using:
 
@@ -19,6 +20,7 @@ docker run -it aimeos/ci-php:<version> bash
 
 ## Available PHP extesions
 
+* apcu
 * bcmath
 * curl
 * gd

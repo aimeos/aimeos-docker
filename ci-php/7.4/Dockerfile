@@ -4,7 +4,7 @@ LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
 ENV PHP_MINOR 7.4
 
-RUN sudo add-apt-repository -y ppa:ondrej/php && sudo apt-get update
+RUN sudo add-apt-repository -y ppa:ondrej/php
 
 # Install PHP and some PHP extensions
 RUN sudo apt-get install -y \
@@ -20,8 +20,12 @@ RUN sudo apt-get install -y \
 		php${PHP_MINOR}-mysql \
 		php${PHP_MINOR}-pgsql \
 		php${PHP_MINOR}-sqlite \
+		php${PHP_MINOR}-xdebug \
 		php${PHP_MINOR}-xml \
 		php${PHP_MINOR}-zip
+
+# Make sure to use the correct PHP version
+RUN sudo update-alternatives --set php /usr/bin/php{PHP_MINOR}
 
 # Install mssql tools and odbc libs
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
