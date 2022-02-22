@@ -24,7 +24,7 @@ RUN sudo apt-get install -y \
 		php${PHP_MINOR}-zip
 
 # Make sure to use the correct PHP version
-RUN sudo update-alternatives --set php /usr/bin/php{PHP_MINOR}
+RUN sudo update-alternatives --set php /usr/bin/php${PHP_MINOR}
 
 # Install mssql tools and odbc libs
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -

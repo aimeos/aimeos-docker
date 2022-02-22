@@ -25,7 +25,7 @@ RUN sudo apt-get install -y \
 		php${PHP_MINOR}-zip
 
 # Make sure to use the correct PHP version
-RUN sudo update-alternatives --set php /usr/bin/php{PHP_MINOR}
+RUN sudo update-alternatives --set php /usr/bin/php${PHP_MINOR}
 
 # Install the PHP package manager Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
