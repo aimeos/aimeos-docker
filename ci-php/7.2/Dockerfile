@@ -4,7 +4,7 @@ LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
 ENV PHP_MINOR 7.2
 
-RUN sudo add-apt-repository -y ppa:ondrej/php
+RUN sudo add-apt-repository -s -y ppa:ondrej/php
 
 # Install PHP and some PHP extensions
 RUN sudo apt-get install -y \
