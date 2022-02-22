@@ -4,23 +4,24 @@ LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
 ENV PHP_MINOR 8.1
 
-RUN sudo add-apt-repository -s -y ppa:ondrej/php
-RUN sudo apt-get install -y php${PHP_MINOR} php${PHP_MINOR}-dev
+RUN sudo add-apt-repository -y ppa:ondrej/php && sudo apt-get update
 
-# Pre-install a few very popular PHP extensions
-RUN sudo apt-get update && sudo apt-get install -y \
-		php$PHP_MINOR-apcu \
-		php$PHP_MINOR-bcmath \
-		php$PHP_MINOR-curl \
-		php$PHP_MINOR-gd \
-		php$PHP_MINOR-intl \
-		php$PHP_MINOR-mbstring \
-		php$PHP_MINOR-mysql \
-		php$PHP_MINOR-pgsql \
-		php$PHP_MINOR-sqlite \
-		php$PHP_MINOR-xdebug \
-		php$PHP_MINOR-xml \
-		php$PHP_MINOR-zip
+# Install PHP and some PHP extensions
+RUN sudo apt-get install -y \
+		php${PHP_MINOR} \
+		php${PHP_MINOR}-dev \
+		php${PHP_MINOR}-apcu \
+		php${PHP_MINOR}-bcmath \
+		php${PHP_MINOR}-curl \
+		php${PHP_MINOR}-gd \
+		php${PHP_MINOR}-intl \
+		php${PHP_MINOR}-json \
+		php${PHP_MINOR}-mbstring \
+		php${PHP_MINOR}-mysql \
+		php${PHP_MINOR}-pgsql \
+		php${PHP_MINOR}-sqlite \
+		php${PHP_MINOR}-xml \
+		php${PHP_MINOR}-zip
 
 # Install mssql tools and odbc libs
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
