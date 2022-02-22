@@ -9,6 +9,7 @@ RUN sudo apt-get install -y php${PHP_MINOR} php${PHP_MINOR}-dev
 
 # Pre-install a few very popular PHP extensions
 RUN sudo apt-get update && sudo apt-get install -y \
+		php$PHP_MINOR-apcu \
 		php$PHP_MINOR-bcmath \
 		php$PHP_MINOR-curl \
 		php$PHP_MINOR-gd \
