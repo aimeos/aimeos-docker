@@ -19,10 +19,12 @@ RUN apk add --no-cache --virtual .build-deps \
 		libjpeg-turbo-dev \
 		libpng-dev \
 		libwebp-dev \
+		libxml-dev \
 		libzip-dev \
 		zlib-dev \
 		libcurl \
 		libpng \
+		libxml \
 		zlib
 
 RUN docker-php-ext-configure gd \
