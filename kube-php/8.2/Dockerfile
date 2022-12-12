@@ -19,11 +19,13 @@ RUN set -eux; apk add --no-cache --virtual .build-deps \
 		imagemagick-dev \
 		libjpeg-turbo-dev \
 		libpng-dev \
+		libpq-dev \
 		libwebp-dev \
 		libzip-dev \
 		zlib-dev \
 		gmp \
 		libpng \
+		libpq \
 		zlib
 
 RUN set -eux; docker-php-ext-configure gd \
