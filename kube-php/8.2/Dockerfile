@@ -7,19 +7,18 @@ ENV PHP_MINOR 8.2
 RUN set -eux
 
 RUN apk add --no-cache imagemagick
+
 RUN apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
 		freetype-dev \
 		icu-dev \
 		imagemagick-dev \
+		libcurl \
 		libjpeg-turbo-dev \
+		libpng \
 		libpng-dev \
 		libwebp-dev \
-		libzip-dev
-
-RUN apk add --no-cache --virtual .build-deps \
-		libcurl \
-		libpng \
+		libzip-dev \
 		zlib \
 		zlib-dev
 
