@@ -12,11 +12,13 @@ RUN apk add --no-cache --virtual .build-deps \
 		freetype-dev \
 		icu-dev \
 		imagemagick-dev \
-		libcurl-dev \
 		libjpeg-turbo-dev \
 		libpng-dev \
 		libwebp-dev \
 		libzip-dev
+
+RUN apk add --no-cache --virtual .build-deps \
+		libcurl
 
 RUN docker-php-ext-configure gd \
 		--with-freetype \
