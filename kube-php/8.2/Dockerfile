@@ -23,18 +23,27 @@ RUN docker-php-ext-configure gd \
 		--with-webp
 
 RUN docker-php-ext-install -j "$(nproc)" \
-		apcu \
 		bcmath \
+		ctype \
 		curl \
 		dom \
 		fileinfo \
 		gd \
+		gettext \
+		gmp \
+		iconv \
 		intl \
 		json \
 		mbstring \
 		mysql \
+		opcache \
+		pcntl \
 		pcre \
-		PDO \
+		pdo \
+		pdo_mysql \
+		pdo_pgsql \
+		spl \
+		standard \
 		xml \
 		zip
 
