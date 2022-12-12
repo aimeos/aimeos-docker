@@ -19,7 +19,8 @@ RUN apk add --no-cache --virtual .build-deps \
 
 RUN apk add --no-cache --virtual .build-deps \
 		libcurl \
-		zlib
+		zlib \
+		zlib-dev
 
 RUN docker-php-ext-configure gd \
 		--with-freetype \
