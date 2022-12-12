@@ -16,6 +16,7 @@ RUN apk add --no-cache --virtual .build-deps \
 		freetype-dev \
 		icu-dev \
 		imagemagick-dev \
+		libintl-dev \
 		libjpeg-turbo-dev \
 		libpng-dev \
 		libwebp-dev \
@@ -23,6 +24,7 @@ RUN apk add --no-cache --virtual .build-deps \
 		libzip-dev \
 		zlib-dev \
 		libcurl \
+		libintl \
 		libpng \
 		libxml2 \
 		zlib
