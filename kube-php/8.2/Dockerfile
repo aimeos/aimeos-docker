@@ -19,6 +19,7 @@ RUN apk add --no-cache --virtual .build-deps \
 
 RUN apk add --no-cache --virtual .build-deps \
 		libcurl \
+		libpng \
 		zlib \
 		zlib-dev
 
