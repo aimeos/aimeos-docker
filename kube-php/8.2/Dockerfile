@@ -7,11 +7,14 @@ ENV PHP_MINOR 8.2
 RUN set -eux
 RUN php -m
 
-RUN apk update
+RUN apk add --no-cache --virtual runtime-deps \
+		gmp \
+		imagemagick \
+		libpng \
+		libpq \
+		zlib
 
-RUN apk add --no-cache imagemagick
-
-RUN apk add --no-cache --virtual .build-deps \
+RUN apk add --no-cache --virtual build-deps \
 		$PHPIZE_DEPS \
 		freetype-dev \
 		gettext-dev \
@@ -23,11 +26,7 @@ RUN apk add --no-cache --virtual .build-deps \
 		libpq-dev \
 		libwebp-dev \
 		libzip-dev \
-		zlib-dev \
-		gmp \
-		libpng \
-		libpq \
-		zlib
+		zlib-dev
 
 RUN docker-php-ext-configure gd \
 		--with-freetype \
@@ -49,6 +48,8 @@ RUN docker-php-ext-install -j "$(nproc)" \
 RUN pecl install imagick
 RUN docker-php-ext-enable imagick
 RUN rm -r /tmp/pear
+
+RUN apk del build-deps
 
 RUN docker-php-ext-enable opcache;
 RUN { \
@@ -72,14 +73,13 @@ RUN { \
 	} > /usr/local/etc/php/conf.d/error-logging.ini
 
 # Install the PHP package manager Composer
-RUN \
-	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
 	php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
 	php -r "unlink('composer-setup.php');" && \
 	composer --version
 
-RUN echo '<?php phpinfo' > /var/www/html/index.php
-
 VOLUME /var/www/html
+
+ENTRYPOINT curl -sfL $SETUPURL | sh -
 
 CMD ["php-fpm"]
