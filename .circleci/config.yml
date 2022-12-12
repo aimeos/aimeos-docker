@@ -64,17 +64,27 @@ jobs:
       - run: docker run aimeos/ci-php:8.2 dpkg -l
       - run: docker push aimeos/ci-php:8.2
 
+  "kube-php-8.2":
+    machine: true
+    steps:
+      - checkout
+      - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run: docker build -t aimeos/kube-php:8.2 kube-php/8.2
+      - run: docker run aimeos/kube-php:8.2 apk info
+      - run: docker push aimeos/kube-php:8.2
+
 workflows:
   version: 2
   build:
     jobs:
-      - "php-7.1"
-      - "php-7.2"
-      - "php-7.3"
-      - "php-7.4"
-      - "php-8.0"
-      - "php-8.1"
-      - "php-8.2"
+#      - "php-7.1"
+#      - "php-7.2"
+#      - "php-7.3"
+#      - "php-7.4"
+#      - "php-8.0"
+#      - "php-8.1"
+#      - "php-8.2"
+      - "kube-php-8.2"
   monthly:
     jobs:
       - "php-7.1"
@@ -84,6 +94,7 @@ workflows:
       - "php-8.0"
       - "php-8.1"
       - "php-8.2"
+      - "kube-php-8.2"
     triggers:
       - schedule:
           cron: "15 7 3 * *"
