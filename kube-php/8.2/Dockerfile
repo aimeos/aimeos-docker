@@ -6,22 +6,24 @@ ENV PHP_MINOR 8.2
 
 RUN set -eux
 
+RUN apk update
+
 RUN apk add --no-cache imagemagick
 
 RUN apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
+		curl-dev \
 		freetype-dev \
 		icu-dev \
 		imagemagick-dev \
-		libcurl \
-		libcurl-dev \
 		libjpeg-turbo-dev \
-		libpng \
 		libpng-dev \
 		libwebp-dev \
 		libzip-dev \
-		zlib \
-		zlib-dev
+		zlib-dev \
+		libcurl \
+		libpng \
+		zlib
 
 RUN docker-php-ext-configure gd \
 		--with-freetype \
