@@ -4,13 +4,14 @@ LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
 ENV PHP_MINOR 8.2
 
-RUN set -eux; php -m
+RUN set -eux
+RUN php -m
 
-RUN set -eux; apk update
+RUN apk update
 
-RUN set -eux; apk add --no-cache imagemagick
+RUN apk add --no-cache imagemagick
 
-RUN set -eux; apk add --no-cache --virtual .build-deps \
+RUN apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
 		freetype-dev \
 		gettext-dev \
@@ -28,12 +29,12 @@ RUN set -eux; apk add --no-cache --virtual .build-deps \
 		libpq \
 		zlib
 
-RUN set -eux; docker-php-ext-configure gd \
+RUN docker-php-ext-configure gd \
 		--with-freetype \
 		--with-jpeg \
 		--with-webp
 
-RUN set -eux; docker-php-ext-install -j "$(nproc)" \
+RUN docker-php-ext-install -j "$(nproc)" \
 		bcmath \
 		gd \
 		gettext \
@@ -45,12 +46,12 @@ RUN set -eux; docker-php-ext-install -j "$(nproc)" \
 		pdo_pgsql \
 		zip
 
-RUN set -eux; pecl install imagick
-RUN set -eux; docker-php-ext-enable imagick
-RUN set -eux; rm -r /tmp/pear
+RUN pecl install imagick
+RUN docker-php-ext-enable imagick
+RUN rm -r /tmp/pear
 
-RUN set -eux; docker-php-ext-enable opcache;
-RUN set -eux; { \
+RUN docker-php-ext-enable opcache;
+RUN { \
 		echo 'opcache.memory_consumption=128'; \
 		echo 'opcache.interned_strings_buffer=8'; \
 		echo 'opcache.max_accelerated_files=10000'; \
@@ -58,7 +59,7 @@ RUN set -eux; { \
 		echo 'opcache.fast_shutdown=1'; \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
-RUN set -eux; { \
+RUN { \
 		echo 'error_reporting = E_ERROR | E_WARNING | E_PARSE | E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_COMPILE_WARNING | E_RECOVERABLE_ERROR'; \
 		echo 'display_errors = Off'; \
 		echo 'display_startup_errors = Off'; \
@@ -71,13 +72,13 @@ RUN set -eux; { \
 	} > /usr/local/etc/php/conf.d/error-logging.ini
 
 # Install the PHP package manager Composer
-RUN set -eux; \
+RUN \
 	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-	sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
+	php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
 	php -r "unlink('composer-setup.php');" && \
 	composer --version
 
-RUN set -eux; echo '<?php phpinfo' > /var/www/html/index.php
+RUN echo '<?php phpinfo' > /var/www/html/index.php
 
 VOLUME /var/www/html
 
