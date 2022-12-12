@@ -49,8 +49,6 @@ RUN pecl install imagick
 RUN docker-php-ext-enable imagick
 RUN rm -r /tmp/pear
 
-RUN apk del build-deps
-
 RUN docker-php-ext-enable opcache;
 RUN { \
 		echo 'opcache.memory_consumption=128'; \
@@ -77,8 +75,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 	php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
 	php -r "unlink('composer-setup.php');" && \
 	composer --version
-
-VOLUME /var/www/html
 
 ENTRYPOINT curl -sfL $SETUPURL | sh -
 
