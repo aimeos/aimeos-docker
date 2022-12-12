@@ -20,12 +20,10 @@ RUN set -eux; apk add --no-cache --virtual .build-deps \
 		libjpeg-turbo-dev \
 		libpng-dev \
 		libwebp-dev \
-		libxml2-dev \
 		libzip-dev \
 		zlib-dev \
 		gmp \
 		libpng \
-		libxml2 \
 		zlib
 
 RUN set -eux; docker-php-ext-configure gd \
@@ -39,17 +37,10 @@ RUN set -eux; docker-php-ext-install -j "$(nproc)" \
 		gettext \
 		gmp \
 		intl \
-		json \
-		mbstring \
 		opcache \
 		pcntl \
-		pcre \
-		pdo \
 		pdo_mysql \
 		pdo_pgsql \
-		spl \
-		standard \
-		xml \
 		zip
 
 RUN set -eux; pecl install imagick
