@@ -23,6 +23,7 @@ RUN apk add --no-cache --virtual .build-deps \
 		libxml2-dev \
 		libzip-dev \
 		zlib-dev \
+		gmp \
 		libcurl \
 		libpng \
 		libxml2 \
