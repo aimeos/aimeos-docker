@@ -12,6 +12,7 @@ RUN apk add --no-cache --virtual .build-deps \
 		freetype-dev \
 		icu-dev \
 		imagemagick-dev \
+		libcurl-dev \
 		libjpeg-turbo-dev \
 		libpng-dev \
 		libwebp-dev \
