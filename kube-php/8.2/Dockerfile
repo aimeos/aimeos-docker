@@ -35,7 +35,6 @@ RUN docker-php-ext-install -j "$(nproc)" \
 		intl \
 		json \
 		mbstring \
-		mysql \
 		opcache \
 		pcntl \
 		pcre \
