@@ -43,7 +43,6 @@ RUN docker-php-ext-install -j "$(nproc)" \
 		gd \
 		gettext \
 		gmp \
-		iconv \
 		intl \
 		json \
 		mbstring \
