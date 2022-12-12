@@ -14,6 +14,7 @@ RUN apk add --no-cache --virtual .build-deps \
 		icu-dev \
 		imagemagick-dev \
 		libcurl \
+		libcurl-dev \
 		libjpeg-turbo-dev \
 		libpng \
 		libpng-dev \
@@ -29,7 +30,6 @@ RUN docker-php-ext-configure gd \
 
 RUN docker-php-ext-install -j "$(nproc)" \
 		bcmath \
-		ctype \
 		curl \
 		dom \
 		fileinfo \
