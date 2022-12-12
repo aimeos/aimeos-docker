@@ -14,9 +14,9 @@ RUN apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
 		curl-dev \
 		freetype-dev \
+		gettext-dev \
 		icu-dev \
 		imagemagick-dev \
-		libintl-dev \
 		libjpeg-turbo-dev \
 		libpng-dev \
 		libwebp-dev \
@@ -24,7 +24,6 @@ RUN apk add --no-cache --virtual .build-deps \
 		libzip-dev \
 		zlib-dev \
 		libcurl \
-		libintl \
 		libpng \
 		libxml2 \
 		zlib
