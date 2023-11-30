@@ -19,7 +19,6 @@ RUN sudo apt-get install -y \
 		php${PHP_MINOR}-mysql \
 		php${PHP_MINOR}-pgsql \
 		php${PHP_MINOR}-sqlite \
-		php${PHP_MINOR}-xdebug \
 		php${PHP_MINOR}-xml \
 		php${PHP_MINOR}-zip
 
