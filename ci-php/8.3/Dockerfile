@@ -42,7 +42,7 @@ RUN curl --output oracle-instantclient-basiclite-21.1.0.0.0-1.x86_64.rpm https:/
 RUN curl --output oracle-instantclient-sqlplus-21.1.0.0.0-1.x86_64.rpm https://download.oracle.com/otn_software/linux/instantclient/211000/oracle-instantclient-sqlplus-21.1.0.0.0-1.x86_64.rpm
 RUN curl --output oracle-instantclient-devel-21.1.0.0.0-1.x86_64.rpm https://download.oracle.com/otn_software/linux/instantclient/211000/oracle-instantclient-devel-21.1.0.0.0-1.x86_64.rpm
 RUN sudo alien -i oracle-instantclient-basiclite-21.1.0.0.0-1.x86_64.rpm
-RUN sudo alien -i oracle-instantclient-sqlplus-21.1.0.0.0-1.x86_64.rpm
+RUN sudo alien --scripts -i oracle-instantclient-sqlplus-21.1.0.0.0-1.x86_64.rpm
 RUN sudo alien -i oracle-instantclient-devel-21.1.0.0.0-1.x86_64.rpm
 RUN sudo echo -e "/usr/lib/oracle/21.1/client64/lib/" | sudo tee /etc/ld.so.conf.d/oracle.conf
 RUN sudo chmod o+r /etc/ld.so.conf.d/oracle.conf
