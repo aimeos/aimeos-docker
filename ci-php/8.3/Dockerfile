@@ -76,7 +76,7 @@ RUN sudo phpenmod pdo_sqlsrv
 
 RUN apt-get source php${PHP_MINOR}
 RUN cd `find php${PHP_MINOR}*/ext/pdo_oci -mindepth 0 -maxdepth 0 -type d` && phpize
-RUN cd `find php${PHP_MINOR}*/ext/pdo_oci -mindepth 0 -maxdepth 0 -type d` && ./configure --with-pdo-oci=instantclient,/usr/lib/oracle/21/client64/lib/
+RUN cd `find php${PHP_MINOR}*/ext/pdo_oci -mindepth 0 -maxdepth 0 -type d` && ./configure --with-pdo-oci=instantclient,/usr/lib/oracle/24/client64/lib/
 RUN cd `find php${PHP_MINOR}*/ext/pdo_oci -mindepth 0 -maxdepth 0 -type d` && make
 RUN cd `find php${PHP_MINOR}*/ext/pdo_oci -mindepth 0 -maxdepth 0 -type d` && sudo make install
 RUN echo -e "; priority=20\nextension=pdo_oci.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_oci.ini
