@@ -1,4 +1,4 @@
-FROM cimg/base:current
+FROM cimg/base:edge
 
 LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
@@ -39,10 +39,10 @@ RUN sudo apt-get update && sudo ACCEPT_EULA=Y apt-get install -y \
 # Install Oracle tools and libs
 RUN sudo apt-get install alien libaio1
 RUN curl --output oracle-instantclient-basiclite-linuxx64.rpm https://download.oracle.com/otn_software/linux/instantclient/oracle-instantclient-basiclite-linuxx64.rpm
-RUN curl --output oracle-instantclient-sqlplus-linuxx64.rpm https://download.oracle.com/otn_software/linux/instantclient/oracle-instantclient-sqlplus-linuxx64.rpm
+# RUN curl --output oracle-instantclient-sqlplus-linuxx64.rpm https://download.oracle.com/otn_software/linux/instantclient/oracle-instantclient-sqlplus-linuxx64.rpm
 RUN curl --output oracle-instantclient-devel-linuxx64.rpm https://download.oracle.com/otn_software/linux/instantclient/oracle-instantclient-devel-linuxx64.rpm
 RUN sudo alien -i oracle-instantclient-basiclite-linuxx64.rpm
-RUN sudo alien -i oracle-instantclient-sqlplus-linuxx64.rpm
+# RUN sudo alien -i oracle-instantclient-sqlplus-linuxx64.rpm
 RUN sudo alien -i oracle-instantclient-devel-linuxx64.rpm
 RUN export ORACLE_HOME=`ls -d /usr/lib/oracle/*/client64`
 RUN echo "'$ORACLE_HOME'"
