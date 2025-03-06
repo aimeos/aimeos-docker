@@ -2,7 +2,7 @@ FROM cimg/base:edge
 
 LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
-ENV PHP_MINOR=8.3
+ENV PHP_MINOR=8.4
 
 RUN sudo add-apt-repository -s -y ppa:ondrej/php
 
@@ -62,18 +62,18 @@ RUN sudo pecl channel-update pecl.php.net
 RUN sudo IBM_DB_HOME=/opt/ibm/clidriver pecl install ibm_db2
 RUN echo -e "; priority=20\nextension=ibm_db2.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/ibm_db2.ini
 RUN sudo phpenmod ibm_db2
-RUN export ORACLE_HOME=`ls -d /usr/lib/oracle/*/client64`; sudo pecl install oci8
+RUN sudo pecl install oci8
 RUN echo -e "; priority=20\nextension=oci8.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/oci8.ini
 RUN sudo phpenmod oci8
-#RUN export ORACLE_HOME=`ls -d /usr/lib/oracle/*/client64`; sudo pecl install pdo_oci
+#RUN sudo pecl install pdo_oci
 #RUN echo -e "; priority=20\nextension=pdo_oci.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_oci.ini
 #RUN sudo phpenmod pdo_oci
-RUN sudo pecl install sqlsrv-beta
-RUN echo -e "; priority=20\nextension=sqlsrv" | sudo tee /etc/php/$PHP_MINOR/mods-available/sqlsrv.ini
-RUN sudo phpenmod sqlsrv
-RUN sudo pecl install pdo_sqlsrv-beta
-RUN echo -e "; priority=20\nextension=pdo_sqlsrv" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_sqlsrv.ini
-RUN sudo phpenmod pdo_sqlsrv
+#RUN sudo pecl install sqlsrv
+#RUN echo -e "; priority=20\nextension=sqlsrv" | sudo tee /etc/php/$PHP_MINOR/mods-available/sqlsrv.ini
+#RUN sudo phpenmod sqlsrv
+#RUN sudo pecl install pdo_sqlsrv
+#RUN echo -e "; priority=20\nextension=pdo_sqlsrv" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_sqlsrv.ini
+#RUN sudo phpenmod pdo_sqlsrv
 
 # Install the PHP package manager Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \

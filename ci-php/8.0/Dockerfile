@@ -2,7 +2,7 @@ FROM cimg/base:stable
 
 LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
-ENV PHP_MINOR 8.0
+ENV PHP_MINOR=8.0
 
 RUN sudo add-apt-repository -s -y ppa:ondrej/php
 
@@ -38,18 +38,17 @@ RUN sudo apt-get update && sudo ACCEPT_EULA=Y apt-get install -y \
 
 # Install Oracle tools and libs
 RUN sudo apt-get install alien libaio1
-RUN curl --output oracle-instantclient-basiclite-21.1.0.0.0-1.x86_64.rpm https://download.oracle.com/otn_software/linux/instantclient/211000/oracle-instantclient-basiclite-21.1.0.0.0-1.x86_64.rpm
-RUN curl --output oracle-instantclient-sqlplus-21.1.0.0.0-1.x86_64.rpm https://download.oracle.com/otn_software/linux/instantclient/211000/oracle-instantclient-sqlplus-21.1.0.0.0-1.x86_64.rpm
-RUN curl --output oracle-instantclient-devel-21.1.0.0.0-1.x86_64.rpm https://download.oracle.com/otn_software/linux/instantclient/211000/oracle-instantclient-devel-21.1.0.0.0-1.x86_64.rpm
-RUN sudo alien -i oracle-instantclient-basiclite-21.1.0.0.0-1.x86_64.rpm
-RUN sudo alien -i oracle-instantclient-sqlplus-21.1.0.0.0-1.x86_64.rpm
-RUN sudo alien -i oracle-instantclient-devel-21.1.0.0.0-1.x86_64.rpm
-RUN sudo echo -e "/usr/lib/oracle/21.1/client64/lib/" | sudo tee /etc/ld.so.conf.d/oracle.conf
+RUN curl --output ~/oracle-instantclient-basiclite-linuxx64.rpm https://download.oracle.com/otn_software/linux/instantclient/oracle-instantclient-basiclite-linuxx64.rpm
+RUN curl --output ~/oracle-instantclient-devel-linuxx64.rpm https://download.oracle.com/otn_software/linux/instantclient/oracle-instantclient-devel-linuxx64.rpm
+RUN curl --output ~/oracle-instantclient-sqlplus-linuxx64.zip https://download.oracle.com/otn_software/linux/instantclient/instantclient-sqlplus-linuxx64.zip
+RUN mkdir ~/oracle; unzip -d ~/oracle ~/oracle-instantclient-sqlplus-linuxx64.zip
+RUN sudo alien -i ~/oracle-instantclient-basiclite-linuxx64.rpm
+RUN sudo alien -i ~/oracle-instantclient-devel-linuxx64.rpm
+RUN sudo echo -e `ls -d /usr/lib/oracle/*/client64/lib` | sudo tee /etc/ld.so.conf.d/oracle.conf
 RUN sudo chmod o+r /etc/ld.so.conf.d/oracle.conf
 RUN sudo ldconfig
-RUN export ORACLE_HOME=/usr/lib/oracle/21.1/client64
-RUN export PATH=$PATH:$ORACLE_HOME/bin
-RUN rm oracle-*.rpm
+RUN rm ~/oracle-instantclient-*
+ENV PATH=$PATH:~/oracle/bin
 
 # Install DB2 libs
 RUN sudo apt-get install ksh php-pear
@@ -74,10 +73,9 @@ RUN echo -e "; priority=20\nextension=pdo_sqlsrv" | sudo tee /etc/php/$PHP_MINOR
 RUN sudo phpenmod pdo_sqlsrv
 
 RUN apt-get source php${PHP_MINOR}
-RUN cd `find php${PHP_MINOR}*/ext/pdo_oci -mindepth 0 -maxdepth 0 -type d` && phpize
-RUN cd `find php${PHP_MINOR}*/ext/pdo_oci -mindepth 0 -maxdepth 0 -type d` && ./configure --with-pdo-oci=instantclient,/usr/lib/oracle/21/client64/lib/
-RUN cd `find php${PHP_MINOR}*/ext/pdo_oci -mindepth 0 -maxdepth 0 -type d` && make
-RUN cd `find php${PHP_MINOR}*/ext/pdo_oci -mindepth 0 -maxdepth 0 -type d` && sudo make install
+RUN cd `find php${PHP_MINOR}*/ext/pdo_oci -mindepth 0 -maxdepth 0 -type d` && phpize \
+	&& ./configure --with-pdo-oci=instantclient,/usr/lib/oracle/23/client64/lib/ \
+	&& make && sudo make install
 RUN echo -e "; priority=20\nextension=pdo_oci.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_oci.ini
 RUN sudo phpenmod pdo_oci
 RUN rm -rf php${PHP_MINOR}*
@@ -87,4 +85,4 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 	sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
 	php -r "unlink('composer-setup.php');" && \
 	composer --version
-ENV PATH /home/circleci/.config/composer/vendor/bin:/home/circleci/.composer/vendor/bin:$PATH
+ENV PATH=/home/circleci/.config/composer/vendor/bin:/home/circleci/.composer/vendor/bin:$PATH
