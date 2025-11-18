@@ -41,11 +41,12 @@ RUN mkdir ~/oracle; unzip -d ~/oracle ~/oracle-instantclient-sqlplus-linuxx64.zi
 RUN sudo alien -i ~/oracle-instantclient-basiclite-linuxx64.rpm
 RUN sudo alien -i ~/oracle-instantclient-devel-linuxx64.rpm
 RUN sudo echo -e `ls -d /usr/lib/oracle/*/client64/lib` | sudo tee /etc/ld.so.conf.d/oracle.conf
-RUN echo -e `ls -d /usr/lib/oracle/*/client64/lib`
+RUN echo -e `ls -d /usr/lib/oracle/*/client64/lib`; exit 1
 RUN sudo chmod o+r /etc/ld.so.conf.d/oracle.conf
 RUN sudo ldconfig
 RUN rm ~/oracle-instantclient-*
 ENV PATH=$PATH:~/oracle/bin
+ENV ORACLE_HOME=instantclient,/usr/lib/oracle/23/client64/lib
 
 # Install DB2 libs
 RUN sudo apt-get install ksh php-pear
