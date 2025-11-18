@@ -28,8 +28,8 @@ RUN sudo apt-get install -y \
 RUN sudo update-alternatives --set php /usr/bin/php${PHP_MINOR}
 
 # Install mssql tools and odbc libs
-RUN curl https://packages.microsoft.com/keys/microsoft-2025.asc | sudo apt-key add -
-RUN curl https://packages.microsoft.com/config/ubuntu/24.04/prod.list | sudo tee -a /etc/apt/sources.list
+RUN curl -sSL -O https://packages.microsoft.com/config/ubuntu/24.04/packages-microsoft-prod.deb
+RUN sudo dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
 RUN sudo apt-get update && sudo ACCEPT_EULA=Y apt-get install -y \
 		mssql-tools \
 		unixodbc \
