@@ -1,4 +1,4 @@
-FROM cimg/base:stable
+FROM cimg/base:current-20.04
 
 LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
