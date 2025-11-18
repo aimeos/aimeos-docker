@@ -34,11 +34,11 @@ RUN sudo apt-get update
 
 # Install Oracle tools and libs
 RUN sudo apt-get install alien
-RUN curl --output ~/oracle-instantclient-basiclite-linuxx64.rpm https://download.oracle.com/otn_software/linux/instantclient/oracle-instantclient-basiclite-linuxx64.rpm
+RUN curl --output ~/oracle-instantclient-basic-linuxx64.rpm https://download.oracle.com/otn_software/linux/instantclient/oracle-instantclient-basic-linuxx64.rpm
 RUN curl --output ~/oracle-instantclient-devel-linuxx64.rpm https://download.oracle.com/otn_software/linux/instantclient/oracle-instantclient-devel-linuxx64.rpm
 RUN curl --output ~/oracle-instantclient-sqlplus-linuxx64.zip https://download.oracle.com/otn_software/linux/instantclient/instantclient-sqlplus-linuxx64.zip
 RUN mkdir ~/oracle; unzip -d ~/oracle ~/oracle-instantclient-sqlplus-linuxx64.zip
-RUN sudo alien -i ~/oracle-instantclient-basiclite-linuxx64.rpm
+RUN sudo alien -i ~/oracle-instantclient-basic-linuxx64.rpm
 RUN sudo alien -i ~/oracle-instantclient-devel-linuxx64.rpm
 RUN sudo echo -e `ls -d /usr/lib/oracle/*/client64/lib` | sudo tee /etc/ld.so.conf.d/oracle.conf
 RUN sudo chmod o+r /etc/ld.so.conf.d/oracle.conf
