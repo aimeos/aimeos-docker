@@ -61,15 +61,15 @@ RUN sudo phpenmod ibm_db2
 RUN sudo pecl install oci8
 RUN echo -e "; priority=20\nextension=oci8.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/oci8.ini
 RUN sudo phpenmod oci8
-#RUN sudo pecl install pdo_oci
-#RUN echo -e "; priority=20\nextension=pdo_oci.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_oci.ini
-#RUN sudo phpenmod pdo_oci
-#RUN sudo pecl install sqlsrv
-#RUN echo -e "; priority=20\nextension=sqlsrv" | sudo tee /etc/php/$PHP_MINOR/mods-available/sqlsrv.ini
-#RUN sudo phpenmod sqlsrv
-#RUN sudo pecl install pdo_sqlsrv
-#RUN echo -e "; priority=20\nextension=pdo_sqlsrv" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_sqlsrv.ini
-#RUN sudo phpenmod pdo_sqlsrv
+RUN sudo pecl install pdo_oci
+RUN echo -e "; priority=20\nextension=pdo_oci.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_oci.ini
+RUN sudo phpenmod pdo_oci
+RUN sudo pecl install sqlsrv
+RUN echo -e "; priority=20\nextension=sqlsrv" | sudo tee /etc/php/$PHP_MINOR/mods-available/sqlsrv.ini
+RUN sudo phpenmod sqlsrv
+RUN sudo pecl install pdo_sqlsrv
+RUN echo -e "; priority=20\nextension=pdo_sqlsrv" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_sqlsrv.ini
+RUN sudo phpenmod pdo_sqlsrv
 
 # Install the PHP package manager Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
