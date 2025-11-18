@@ -30,12 +30,7 @@ RUN sudo update-alternatives --set php /usr/bin/php${PHP_MINOR}
 # Install mssql tools and odbc libs
 RUN curl -sSL -O https://packages.microsoft.com/config/ubuntu/24.04/packages-microsoft-prod.deb
 RUN sudo dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
-RUN sudo apt-get update && sudo ACCEPT_EULA=Y apt-get install -y \
-		mssql-tools \
-		unixodbc \
-		unixodbc-dev \
-		odbcinst1debian2 \
-		libodbc1
+RUN sudo apt-get update
 
 # Install Oracle tools and libs
 RUN sudo apt-get install alien libaio1
