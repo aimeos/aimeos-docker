@@ -45,6 +45,7 @@ RUN sudo chmod o+r /etc/ld.so.conf.d/oracle.conf
 RUN sudo ldconfig
 RUN rm ~/oracle-instantclient-*
 ENV PATH=$PATH:~/oracle/bin
+RUN echo -e `ls /usr/lib/oracle/23/client64/`; exit 1
 
 # Install DB2 libs
 RUN sudo apt-get install ksh php-pear
