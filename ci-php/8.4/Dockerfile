@@ -59,7 +59,7 @@ RUN sudo pecl channel-update pecl.php.net
 RUN sudo IBM_DB_HOME=/opt/ibm/clidriver pecl install ibm_db2
 RUN echo -e "; priority=20\nextension=ibm_db2.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/ibm_db2.ini
 RUN sudo phpenmod ibm_db2
-RUN sudo pecl install oci8
+RUN sudo ORACLE_HOME=instantclient,/usr/lib/oracle/23/client64/lib pecl install oci8
 RUN echo -e "; priority=20\nextension=oci8.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/oci8.ini
 RUN sudo phpenmod oci8
 RUN sudo pecl install pdo_oci
