@@ -33,7 +33,7 @@ RUN sudo dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
 RUN sudo apt-get update
 
 # Install Oracle tools and libs
-RUN sudo apt-get install alien libaio1
+RUN sudo apt-get install alien
 RUN curl --output ~/oracle-instantclient-basiclite-linuxx64.rpm https://download.oracle.com/otn_software/linux/instantclient/oracle-instantclient-basiclite-linuxx64.rpm
 RUN curl --output ~/oracle-instantclient-devel-linuxx64.rpm https://download.oracle.com/otn_software/linux/instantclient/oracle-instantclient-devel-linuxx64.rpm
 RUN curl --output ~/oracle-instantclient-sqlplus-linuxx64.zip https://download.oracle.com/otn_software/linux/instantclient/instantclient-sqlplus-linuxx64.zip
