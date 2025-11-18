@@ -41,6 +41,7 @@ RUN mkdir ~/oracle; unzip -d ~/oracle ~/oracle-instantclient-sqlplus-linuxx64.zi
 RUN sudo alien -i ~/oracle-instantclient-basiclite-linuxx64.rpm
 RUN sudo alien -i ~/oracle-instantclient-devel-linuxx64.rpm
 RUN sudo echo -e `ls -d /usr/lib/oracle/*/client64/lib` | sudo tee /etc/ld.so.conf.d/oracle.conf
+RUN echo -e `ls -d /usr/lib/oracle/*/client64/lib`
 RUN sudo chmod o+r /etc/ld.so.conf.d/oracle.conf
 RUN sudo ldconfig
 RUN rm ~/oracle-instantclient-*
