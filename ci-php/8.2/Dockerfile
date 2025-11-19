@@ -1,4 +1,4 @@
-FROM cimg/base:stable
+FROM cimg/base:current-22.04
 
 LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
@@ -29,7 +29,7 @@ RUN sudo update-alternatives --set php /usr/bin/php${PHP_MINOR}
 
 # Install mssql tools and odbc libs
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-RUN curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list | sudo tee -a /etc/apt/sources.list
+RUN curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list | sudo tee -a /etc/apt/sources.list
 RUN sudo apt-get update && sudo ACCEPT_EULA=Y apt-get install -y \
 		mssql-tools \
 		unixodbc \
@@ -63,13 +63,13 @@ RUN sudo pecl channel-update pecl.php.net
 RUN sudo IBM_DB_HOME=/opt/ibm/clidriver pecl install ibm_db2
 RUN echo -e "; priority=20\nextension=ibm_db2.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/ibm_db2.ini
 RUN sudo phpenmod ibm_db2
-RUN sudo pecl install oci8
+RUN sudo pecl install oci8-3.0.1
 RUN echo -e "; priority=20\nextension=oci8.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/oci8.ini
 RUN sudo phpenmod oci8
-RUN sudo pecl install sqlsrv-beta
+RUN sudo pecl install sqlsrv-5.11.1
 RUN echo -e "; priority=20\nextension=sqlsrv" | sudo tee /etc/php/$PHP_MINOR/mods-available/sqlsrv.ini
 RUN sudo phpenmod sqlsrv
-RUN sudo pecl install pdo_sqlsrv-beta
+RUN sudo pecl install pdo_sqlsrv-5.11.1
 RUN echo -e "; priority=20\nextension=pdo_sqlsrv" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_sqlsrv.ini
 RUN sudo phpenmod pdo_sqlsrv
 

@@ -1,4 +1,4 @@
-FROM cimg/base:stable
+FROM cimg/base:current-22.04
 
 LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
@@ -29,7 +29,7 @@ RUN sudo update-alternatives --set php /usr/bin/php${PHP_MINOR}
 
 # Install mssql tools and odbc libs
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-RUN curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list | sudo tee -a /etc/apt/sources.list
+RUN curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list | sudo tee -a /etc/apt/sources.list
 RUN sudo apt-get update && sudo ACCEPT_EULA=Y apt-get install -y \
 		mssql-tools \
 		unixodbc \

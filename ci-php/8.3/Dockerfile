@@ -1,4 +1,4 @@
-FROM cimg/base:edge
+FROM cimg/base:current-24.04
 
 LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
@@ -28,17 +28,17 @@ RUN sudo apt-get install -y \
 RUN sudo update-alternatives --set php /usr/bin/php${PHP_MINOR}
 
 # Install mssql tools and odbc libs
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-RUN curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list | sudo tee -a /etc/apt/sources.list
+RUN curl -sSL -O https://packages.microsoft.com/config/ubuntu/24.04/packages-microsoft-prod.deb
+RUN sudo dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
 RUN sudo apt-get update && sudo ACCEPT_EULA=Y apt-get install -y \
-		mssql-tools \
-		unixodbc \
-		unixodbc-dev \
-		odbcinst1debian2 \
-		libodbc1
+	mssql-tools18 \
+	unixodbc-common \
+	unixodbc-dev \
+	libodbcinst2 \
+	libodbc2
 
 # Install Oracle tools and libs
-RUN sudo apt-get install alien libaio1
+RUN sudo apt-get install alien libaio1t64
 RUN curl --output ~/oracle-instantclient-basiclite-linuxx64.rpm https://download.oracle.com/otn_software/linux/instantclient/oracle-instantclient-basiclite-linuxx64.rpm
 RUN curl --output ~/oracle-instantclient-devel-linuxx64.rpm https://download.oracle.com/otn_software/linux/instantclient/oracle-instantclient-devel-linuxx64.rpm
 RUN curl --output ~/oracle-instantclient-sqlplus-linuxx64.zip https://download.oracle.com/otn_software/linux/instantclient/instantclient-sqlplus-linuxx64.zip
@@ -47,6 +47,7 @@ RUN sudo alien -i ~/oracle-instantclient-basiclite-linuxx64.rpm
 RUN sudo alien -i ~/oracle-instantclient-devel-linuxx64.rpm
 RUN sudo echo -e `ls -d /usr/lib/oracle/*/client64/lib` | sudo tee /etc/ld.so.conf.d/oracle.conf
 RUN sudo chmod o+r /etc/ld.so.conf.d/oracle.conf
+RUN sudo ln -s /usr/lib/x86_64-linux-gnu/libaio.so.1t64 /usr/lib/x86_64-linux-gnu/libaio.so.1
 RUN sudo ldconfig
 RUN rm ~/oracle-instantclient-*
 ENV PATH=$PATH:~/oracle/bin
@@ -63,16 +64,16 @@ RUN sudo pecl channel-update pecl.php.net
 RUN sudo IBM_DB_HOME=/opt/ibm/clidriver pecl install ibm_db2
 RUN echo -e "; priority=20\nextension=ibm_db2.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/ibm_db2.ini
 RUN sudo phpenmod ibm_db2
-RUN export ORACLE_HOME=`ls -d /usr/lib/oracle/*/client64`; sudo pecl install oci8
+RUN sudo ORACLE_HOME=/usr/lib/oracle/23/client64 CPPFLAGS="-I/usr/include/oracle/23/client64" pecl install oci8
 RUN echo -e "; priority=20\nextension=oci8.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/oci8.ini
 RUN sudo phpenmod oci8
-#RUN export ORACLE_HOME=`ls -d /usr/lib/oracle/*/client64`; sudo pecl install pdo_oci
-#RUN echo -e "; priority=20\nextension=pdo_oci.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_oci.ini
-#RUN sudo phpenmod pdo_oci
-RUN sudo pecl install sqlsrv-beta
+RUN sudo ORACLE_HOME=/usr/lib/oracle/23/client64 CPPFLAGS="-I/usr/include/oracle/23/client64" pecl install pdo_oci
+RUN echo -e "; priority=20\nextension=pdo_oci.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_oci.ini
+RUN sudo phpenmod pdo_oci
+RUN sudo pecl install sqlsrv
 RUN echo -e "; priority=20\nextension=sqlsrv" | sudo tee /etc/php/$PHP_MINOR/mods-available/sqlsrv.ini
 RUN sudo phpenmod sqlsrv
-RUN sudo pecl install pdo_sqlsrv-beta
+RUN sudo pecl install pdo_sqlsrv
 RUN echo -e "; priority=20\nextension=pdo_sqlsrv" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_sqlsrv.ini
 RUN sudo phpenmod pdo_sqlsrv
 

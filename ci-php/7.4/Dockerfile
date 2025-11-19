@@ -1,4 +1,4 @@
-FROM cimg/base:stable
+FROM cimg/base:current-22.04
 
 LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
@@ -16,7 +16,6 @@ RUN sudo apt-get install -y \
 		php${PHP_MINOR}-curl \
 		php${PHP_MINOR}-gd \
 		php${PHP_MINOR}-intl \
-		php${PHP_MINOR}-json \
 		php${PHP_MINOR}-mbstring \
 		php${PHP_MINOR}-mysql \
 		php${PHP_MINOR}-pgsql \
@@ -30,7 +29,7 @@ RUN sudo update-alternatives --set php /usr/bin/php${PHP_MINOR}
 
 # Install mssql tools and odbc libs
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-RUN curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list | sudo tee -a /etc/apt/sources.list
+RUN curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list | sudo tee -a /etc/apt/sources.list
 RUN sudo apt-get update && sudo ACCEPT_EULA=Y apt-get install -y \
 		mssql-tools \
 		unixodbc \
@@ -73,14 +72,6 @@ RUN sudo phpenmod sqlsrv
 RUN sudo pecl install pdo_sqlsrv-5.10.1
 RUN echo -e "; priority=20\nextension=pdo_sqlsrv" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_sqlsrv.ini
 RUN sudo phpenmod pdo_sqlsrv
-
-RUN apt-get source php${PHP_MINOR}
-RUN cd `find php${PHP_MINOR}*/ext/pdo_oci -mindepth 0 -maxdepth 0 -type d` && phpize \
-	&& ./configure --with-pdo-oci=instantclient,/usr/lib/oracle/23/client64/lib/ \
-	&& make && sudo make install
-RUN echo -e "; priority=20\nextension=pdo_oci.so" | sudo tee /etc/php/$PHP_MINOR/mods-available/pdo_oci.ini
-RUN sudo phpenmod pdo_oci
-RUN rm -rf php${PHP_MINOR}*
 
 # Install the PHP package manager Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
