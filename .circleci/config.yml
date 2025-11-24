@@ -55,6 +55,15 @@ jobs:
       - run: docker run aimeos/ci-php:8.4 dpkg -l
       - run: docker push aimeos/ci-php:8.4
 
+  "php-8.5":
+    machine: true
+    steps:
+      - checkout
+      - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run: docker build -t aimeos/ci-php:8.5 ci-php/8.5
+      - run: docker run aimeos/ci-php:8.5 dpkg -l
+      - run: docker push aimeos/ci-php:8.5
+
 workflows:
   version: 2
   build:
@@ -65,6 +74,7 @@ workflows:
       - "php-8.2"
       - "php-8.3"
       - "php-8.4"
+      - "php-8.5"
   monthly:
     jobs:
       - "php-7.4"
@@ -73,6 +83,7 @@ workflows:
       - "php-8.2"
       - "php-8.3"
       - "php-8.4"
+      - "php-8.5"
     triggers:
       - schedule:
           cron: "15 7 3 * *"
