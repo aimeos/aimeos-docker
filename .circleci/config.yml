@@ -69,9 +69,9 @@ jobs:
     steps:
       - checkout
       - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
-      - run: docker build -t aimeos/ci-mssql:2017 ci-mssql/2017
-      - run: docker run aimeos/ci-mssql:2017 dpkg -l
-      - run: docker push aimeos/ci-mssql:2017
+      - run: docker build -t aimeos/ci-mssql-fts:2017 ci-mssql/2017
+      - run: docker run aimeos/ci-mssql-fts:2017 dpkg -l
+      - run: docker push aimeos/ci-mssql-fts:2017
 
 workflows:
   version: 2

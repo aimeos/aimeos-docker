@@ -4,7 +4,7 @@ The images are used for continuous integration tests and are base on Ubuntu 20.0
 
 ## Available SQL Server images with FTS
 
-* aimeos/ci-mssql:2017
+* aimeos/ci-mssql-fts:2017
 
 ## Available PHP images
 
