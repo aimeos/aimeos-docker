@@ -2,7 +2,11 @@
 
 The images are used for continuous integration tests and are base on Ubuntu 20.04 images from CircleCI.
 
-## Available images
+## Available SQL Server images with FTS
+
+* aimeos/ci-mssql:2017
+
+## Available PHP images
 
 * aimeos/ci-php:7.1
 * aimeos/ci-php:7.2
@@ -11,6 +15,9 @@ The images are used for continuous integration tests and are base on Ubuntu 20.0
 * aimeos/ci-php:8.0
 * aimeos/ci-php:8.1
 * aimeos/ci-php:8.2
+* aimeos/ci-php:8.3
+* aimeos/ci-php:8.4
+* aimeos/ci-php:8.5
 
 Run the images using:
 
