@@ -73,6 +73,33 @@ jobs:
       - run: docker run aimeos/ci-mssql-fts:2017 dpkg -l
       - run: docker push aimeos/ci-mssql-fts:2017
 
+  "mssql-2019":
+    machine: true
+    steps:
+      - checkout
+      - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run: docker build -t aimeos/ci-mssql-fts:2019 ci-mssql/2019
+      - run: docker run aimeos/ci-mssql-fts:2019 dpkg -l
+      - run: docker push aimeos/ci-mssql-fts:2019
+
+  "mssql-2022":
+    machine: true
+    steps:
+      - checkout
+      - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run: docker build -t aimeos/ci-mssql-fts:2022 ci-mssql/2022
+      - run: docker run aimeos/ci-mssql-fts:2022 dpkg -l
+      - run: docker push aimeos/ci-mssql-fts:2022
+
+  "mssql-2025":
+    machine: true
+    steps:
+      - checkout
+      - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run: docker build -t aimeos/ci-mssql-fts:2025 ci-mssql/2025
+      - run: docker run aimeos/ci-mssql-fts:2025 dpkg -l
+      - run: docker push aimeos/ci-mssql-fts:2025
+
 workflows:
   version: 2
   build:
@@ -85,6 +112,9 @@ workflows:
       - "php-8.4"
       - "php-8.5"
       - "mssql-2017"
+      - "mssql-2019"
+      - "mssql-2022"
+      - "mssql-2025"
   monthly:
     jobs:
       - "php-7.4"
@@ -95,6 +125,9 @@ workflows:
       - "php-8.4"
       - "php-8.5"
       - "mssql-2017"
+      - "mssql-2019"
+      - "mssql-2022"
+      - "mssql-2025"
     triggers:
       - schedule:
           cron: "15 7 3 * *"
