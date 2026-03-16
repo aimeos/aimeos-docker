@@ -1,5 +1,7 @@
 FROM mcr.microsoft.com/mssql/server:2019-latest
 
+USER root
+
 LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
 # Install SQL Server 2019 Full Text Search

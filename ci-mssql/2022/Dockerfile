@@ -1,5 +1,7 @@
 FROM mcr.microsoft.com/mssql/server:2022-latest
 
+USER root
+
 LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
 # Install SQL Server 2022 Full Text Search

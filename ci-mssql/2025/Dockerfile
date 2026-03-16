@@ -1,5 +1,7 @@
 FROM mcr.microsoft.com/mssql/server:2025-latest
 
+USER root
+
 LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
 # Install SQL Server 2025 Full Text Search

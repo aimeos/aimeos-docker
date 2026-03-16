@@ -1,5 +1,7 @@
 FROM mcr.microsoft.com/mssql/server:2017-latest
 
+USER root
+
 LABEL maintainer="Aimeos <aimeos@aimeos.org>"
 
 # Install SQL Server 2017 Full Text Search
