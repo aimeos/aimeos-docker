@@ -1,6 +1,15 @@
 version: 2
 
 jobs:
+  "frankenphp-8.5":
+    machine: true
+    steps:
+      - checkout
+      - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run: docker build -t aimeos/frankenphp:8.5 frankenphp/8.5
+      - run: docker run aimeos/frankenphp:8.5 dpkg -l
+      - run: docker push aimeos/frankenphp:8.5
+
   "php-7.4":
     machine: true
     steps:
@@ -104,6 +113,7 @@ workflows:
   version: 2
   build:
     jobs:
+      - "frankenphp-8.5"
       - "php-7.4"
       - "php-8.0"
       - "php-8.1"
@@ -115,8 +125,19 @@ workflows:
       - "mssql-2019"
       - "mssql-2022"
       - "mssql-2025"
+  weekly:
+    jobs:
+      - "frankenphp-8.5"
+    triggers:
+      - schedule:
+          cron: "0 7 * * 0"
+          filters:
+            branches:
+              only:
+                - main
   monthly:
     jobs:
+      - "frankenphp-8.5"
       - "php-7.4"
       - "php-8.0"
       - "php-8.1"
