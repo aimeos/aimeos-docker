@@ -1,7 +1,7 @@
-version: 2
+version: 2.1
 
 jobs:
-  "frankenphp-8.5":
+  "frankenphp85":
     machine: true
     steps:
       - checkout
@@ -10,7 +10,7 @@ jobs:
       - run: docker run aimeos/frankenphp:8.5 dpkg -l
       - run: docker push aimeos/frankenphp:8.5
 
-  "php-7.4":
+  "php74":
     machine: true
     steps:
       - checkout
@@ -19,7 +19,7 @@ jobs:
       - run: docker run aimeos/ci-php:7.4 dpkg -l
       - run: docker push aimeos/ci-php:7.4
 
-  "php-8.0":
+  "php80":
     machine: true
     steps:
       - checkout
@@ -28,7 +28,7 @@ jobs:
       - run: docker run aimeos/ci-php:8.0 dpkg -l
       - run: docker push aimeos/ci-php:8.0
 
-  "php-8.1":
+  "php81":
     machine: true
     steps:
       - checkout
@@ -37,7 +37,7 @@ jobs:
       - run: docker run aimeos/ci-php:8.1 dpkg -l
       - run: docker push aimeos/ci-php:8.1
 
-  "php-8.2":
+  "php82":
     machine: true
     steps:
       - checkout
@@ -46,7 +46,7 @@ jobs:
       - run: docker run aimeos/ci-php:8.2 dpkg -l
       - run: docker push aimeos/ci-php:8.2
 
-  "php-8.3":
+  "php83":
     machine: true
     steps:
       - checkout
@@ -55,7 +55,7 @@ jobs:
       - run: docker run aimeos/ci-php:8.3 dpkg -l
       - run: docker push aimeos/ci-php:8.3
 
-  "php-8.4":
+  "php84":
     machine: true
     steps:
       - checkout
@@ -64,7 +64,7 @@ jobs:
       - run: docker run aimeos/ci-php:8.4 dpkg -l
       - run: docker push aimeos/ci-php:8.4
 
-  "php-8.5":
+  "php85":
     machine: true
     steps:
       - checkout
@@ -73,7 +73,7 @@ jobs:
       - run: docker run aimeos/ci-php:8.5 dpkg -l
       - run: docker push aimeos/ci-php:8.5
 
-  "mssql-2017":
+  "mssql2017":
     machine: true
     steps:
       - checkout
@@ -82,7 +82,7 @@ jobs:
       - run: docker run aimeos/ci-mssql-fts:2017 dpkg -l
       - run: docker push aimeos/ci-mssql-fts:2017
 
-  "mssql-2019":
+  "mssql2019":
     machine: true
     steps:
       - checkout
@@ -91,7 +91,7 @@ jobs:
       - run: docker run aimeos/ci-mssql-fts:2019 dpkg -l
       - run: docker push aimeos/ci-mssql-fts:2019
 
-  "mssql-2022":
+  "mssql2022":
     machine: true
     steps:
       - checkout
@@ -100,7 +100,7 @@ jobs:
       - run: docker run aimeos/ci-mssql-fts:2022 dpkg -l
       - run: docker push aimeos/ci-mssql-fts:2022
 
-  "mssql-2025":
+  "mssql2025":
     machine: true
     steps:
       - checkout
@@ -113,21 +113,21 @@ workflows:
   version: 2
   build:
     jobs:
-      - "frankenphp-8.5"
-      - "php-7.4"
-      - "php-8.0"
-      - "php-8.1"
-      - "php-8.2"
-      - "php-8.3"
-      - "php-8.4"
-      - "php-8.5"
-      - "mssql-2017"
-      - "mssql-2019"
-      - "mssql-2022"
-      - "mssql-2025"
+      - "frankenphp85"
+      - "php74"
+      - "php80"
+      - "php81"
+      - "php82"
+      - "php83"
+      - "php84"
+      - "php85"
+      - "mssql2017"
+      - "mssql2019"
+      - "mssql2022"
+      - "mssql2025"
   weekly:
     jobs:
-      - "frankenphp-8.5"
+      - "frankenphp85"
     triggers:
       - schedule:
           cron: "0 7 * * 0"
@@ -137,18 +137,18 @@ workflows:
                 - main
   monthly:
     jobs:
-      - "frankenphp-8.5"
-      - "php-7.4"
-      - "php-8.0"
-      - "php-8.1"
-      - "php-8.2"
-      - "php-8.3"
-      - "php-8.4"
-      - "php-8.5"
-      - "mssql-2017"
-      - "mssql-2019"
-      - "mssql-2022"
-      - "mssql-2025"
+      - "frankenphp85"
+      - "php74"
+      - "php80"
+      - "php81"
+      - "php82"
+      - "php83"
+      - "php84"
+      - "php85"
+      - "mssql2017"
+      - "mssql2019"
+      - "mssql2022"
+      - "mssql2025"
     triggers:
       - schedule:
           cron: "15 7 3 * *"
