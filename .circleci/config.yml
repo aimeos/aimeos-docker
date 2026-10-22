@@ -10,6 +10,15 @@ jobs:
       - run: docker run aimeos/php:8.3 dpkg -l
       - run: docker push aimeos/php:8.3
 
+  "php85nginx":
+    machine: true
+    steps:
+      - checkout
+      - run: echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
+      - run: docker build -t aimeos/php:8.5-fpm-nginx php/8.5
+      - run: docker run aimeos/php:8.5-fpm-nginx dpkg -l
+      - run: docker push aimeos/php:8.5-fpm-nginx
+
   "frankenphp85":
     machine: true
     steps:
@@ -123,6 +132,7 @@ workflows:
   build:
     jobs:
       - "php83apache"
+      - "php85nginx"
       - "frankenphp85"
       - "php74"
       - "php80"
@@ -138,6 +148,7 @@ workflows:
   weekly:
     jobs:
       - "php83apache"
+      - "php85nginx"
       - "frankenphp85"
     triggers:
       - schedule:
@@ -149,6 +160,7 @@ workflows:
   monthly:
     jobs:
       - "php83apache"
+      - "php85nginx"
       - "frankenphp85"
       - "php74"
       - "php80"
